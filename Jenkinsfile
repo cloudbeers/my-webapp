@@ -13,7 +13,7 @@ pipeline {
 
       stage ('Deploy App') {
          steps {
-            // Deploy to K8S with grafeas enabled
+            echo "deploy app..."
          }
       }
    }
