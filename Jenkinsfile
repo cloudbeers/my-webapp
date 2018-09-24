@@ -1,7 +1,7 @@
 pipeline {
    agent any
    stages {
-      stage (name: 'Build App' /*, compliance-check: "build-checks" */ ) {
+      stage ('Build App' /*, compliance-check: "build-checks" */ ) {
          steps {
             withMaven() {
                sh "./mvnw verify"
