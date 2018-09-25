@@ -5,9 +5,8 @@ pipeline {
          steps {
             withMaven() {
                sh "./mvnw verify"
-               jacoco classPattern: 'target/classes', sourcePattern: 'src/main/java'
             }
-         }
+         } // withMaven collects jacoco reports
          // perform compliance checks related to the "Build" stage
       }
 
