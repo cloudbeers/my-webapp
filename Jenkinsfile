@@ -6,7 +6,7 @@ pipeline {
             withMaven() {
                sh "./mvnw verify"
             }
-         } // withMaven collects jacoco reports
+         } // withMaven automatically collects jacoco reports
          // perform compliance checks related to the "Build" stage
       }
 
