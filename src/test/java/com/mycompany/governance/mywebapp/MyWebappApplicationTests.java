@@ -1,4 +1,4 @@
-package com.mycompany.compliance.mywebapp;
+package com.mycompany.governance.mywebapp;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
