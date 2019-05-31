@@ -22,7 +22,7 @@ node {
           stage ('Build') {
             withMaven() {
               //  Don't fail the build on test failure, let withMAven mark as unstable: -DtestFailureIgnore=true
-              sh "./mvnw  -DtestFailureIgnore=true -Dmaven.javadoc.failOnError=false clean verify"
+              sh "./mvnw  -Dmaven.test.failure.ignore=true -Dmaven.javadoc.failOnError=false clean verify"
             }
           } // end stage 'Build'
       }
