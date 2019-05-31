@@ -58,4 +58,14 @@
          </plugin>
       </plugins>
    </build>
+   <distributionManagement>
+      <snapshotRepository>
+         <id>nexus.beescloud.com</id>
+         <url>https://nexus3.beescloud.com/repository/maven-snapshots/</url>
+      </snapshotRepository>
+      <repository>
+         <id>nexus.beescloud.com</id>
+         <url>https://nexus3.beescloud.com/repository/maven-releases/</url>
+      </repository>
+   </distributionManagement>
 </project>
