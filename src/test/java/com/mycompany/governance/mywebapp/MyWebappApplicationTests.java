@@ -13,4 +13,8 @@ public class MyWebappApplicationTests {
 	public void contextLoads() {
 	}
 
+	@Test
+	public void there_are_pending_unit_test_failures_in_this_feature_branch() {
+		throw new AssertionError("There are pending unit test failures in this feature branch");
+	}
 }
