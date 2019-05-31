@@ -1,19 +1,30 @@
-pipeline {
-   agent any
-   stages {
-      stage ('Build App' /*, compliance-check: "build-checks" */ ) {
-         steps {
+node {
+    checkout scm
+    if (env.BRANCH_NAME == 'master') { // release branch 'master'
+          stage ('Build') {
             withMaven() {
-               sh "./mvnw verify"
+              sh "./mvnw clean source:jar deploy"
             }
-         } // withMaven automatically collects jacoco reports
-         // perform compliance checks related to the "Build" stage
+          } // end stage 'Build'
+      } else if (env.BRANCH_NAME =~ /v\d+\.x/ ) { // maintenaince release branch 'v1.x', 'v2.x'
+          stage ('Build') {
+            withMaven() {
+              sh "./mvnw clean source:jar deploy"
+            }
+          } // end stage 'Build'
+      } else if (env.CHANGE_ID != null) { // Pull Request
+          stage ('Build') {
+            withMaven() {
+              sh "./mvnw clean verify"
+            }
+          } // end stage 'Build'
+      } else {
+          stage ('Build') {
+            withMaven() {
+              //  Don't fail the build on test failure, let withMAven mark as unstable: -DtestFailureIgnore=true
+              sh "./mvnw  -DtestFailureIgnore=true -Dmaven.javadoc.failOnError=false clean verify"
+            }
+          } // end stage 'Build'
       }
 
-      stage ('Deploy App') {
-         steps {
-            echo "deploy app..."
-         }
-      }
-   }
 }
