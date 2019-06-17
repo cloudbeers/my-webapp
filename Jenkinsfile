@@ -1,25 +1,25 @@
 node {
     checkout scm
     if (env.BRANCH_NAME == 'master') { // release branch 'master'
-          stage ('Build') {
+          stage ('Build release branch and Upload to Nexus') {
             withMaven() {
               sh "./mvnw clean source:jar deploy"
             }
           } // end stage 'Build'
       } else if (env.BRANCH_NAME =~ /v\d+\.x/ ) { // maintenaince release branch 'v1.x', 'v2.x'
-          stage ('Build') {
+          stage ('Build maintenance branch') {
             withMaven() {
               sh "./mvnw clean source:jar deploy"
             }
           } // end stage 'Build'
       } else if (env.CHANGE_ID != null) { // Pull Request
-          stage ('Build') {
+          stage ('Build pull request') {
             withMaven() {
               sh "./mvnw clean verify"
             }
           } // end stage 'Build'
       } else {
-          stage ('Build') {
+          stage ('Build feature branch') {
             withMaven() {
               //  Don't fail the build on test failure, let withMAven mark as unstable: -DtestFailureIgnore=true
               sh "./mvnw  -DtestFailureIgnore=true -Dmaven.javadoc.failOnError=false clean verify"
