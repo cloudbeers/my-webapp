@@ -27,7 +27,7 @@ pipeline {
       }
     }
 
-    stage( 'Build maintenance branch' ) {
+    stage( 'Build Pull Request' ) {
       when {
         expression { CHANGE_ID != null }  // Pull request
       }
