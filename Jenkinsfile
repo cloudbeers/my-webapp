@@ -4,36 +4,37 @@ pipeline {
     buildDiscarder(logRotator(numToKeepStr: '10')) // configurable
     timeout(time: 1, unit: 'HOURS') // configurable
   }
-
-  stage ('Build release branch and Upload to Nexus') {
-    when {
-      expression { BRANCH_NAME == 'master' } // release branch 'master'
-    }
-    steps {
-      withMaven() {
-        sh "./mvnw clean source:jar deploy"
+  stages {
+    stage( 'Build release branch and Upload to Nexus' ) {
+      when {
+        expression { BRANCH_NAME == 'master' } // release branch 'master'
+      }
+      steps {
+        withMaven() {
+          sh "./mvnw clean source:jar deploy"
+        }
       }
     }
-  }
 
-  stage ('Build maintenance branch') {
-    when {
-      expression { BRANCH_NAME =~ /v\d+\.x/}  // maintenance release branch 'v1.x', 'v2.x'
-    }
-    steps {
-      withMaven() {
-        sh "./mvnw clean source:jar deploy"
+    stage( 'Build maintenance branch' ) {
+      when {
+        expression { BRANCH_NAME =~ /v\d+\.x/ }  // maintenance release branch 'v1.x', 'v2.x'
+      }
+      steps {
+        withMaven() {
+          sh "./mvnw clean source:jar deploy"
+        }
       }
     }
-  }
 
-  stage ('Build maintenance branch') {
-    when {
-      expression { CHANGE_ID != null}  // Pull request
-    }
-    steps {
-      withMaven() {
-        sh "./mvnw clean verify"
+    stage( 'Build maintenance branch' ) {
+      when {
+        expression { CHANGE_ID != null }  // Pull request
+      }
+      steps {
+        withMaven() {
+          sh "./mvnw clean verify"
+        }
       }
     }
   }
