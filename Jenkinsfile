@@ -1,30 +1,46 @@
-node {
-    checkout scm
-    if (env.BRANCH_NAME == 'master') { // release branch 'master'
-          stage ('Build release branch and Upload to Nexus') {
-            withMaven() {
-              sh "./mvnw clean source:jar deploy"
-            }
-          } // end stage 'Build'
-      } else if (env.BRANCH_NAME =~ /v\d+\.x/ ) { // maintenaince release branch 'v1.x', 'v2.x'
-          stage ('Build maintenance branch') {
-            withMaven() {
-              sh "./mvnw clean source:jar deploy"
-            }
-          } // end stage 'Build'
-      } else if (env.CHANGE_ID != null) { // Pull Request
-          stage ('Build pull request') {
-            withMaven() {
-              sh "./mvnw clean verify"
-            }
-          } // end stage 'Build'
-      } else {
-          stage ('Build feature branch') {
-            withMaven() {
-              //  Don't fail the build on test failure, let withMAven mark as unstable: -DtestFailureIgnore=true
-              sh "./mvnw  -DtestFailureIgnore=true -Dmaven.javadoc.failOnError=false clean verify"
-            }
-          } // end stage 'Build'
-      }
+pipeline {
+  agent any // configure here if you need any agent
+  options {
+    buildDiscarder(logRotator(numToKeepStr: '10')) // configurable
+    timeout(time: 1, unit: 'HOURS') // configurable
+  }
 
+  stage ('Build release branch and Upload to Nexus') {
+    when {
+      expression { BRANCH_NAME == 'master' } // release branch 'master'
+    }
+    steps {
+      withMaven() {
+        sh "./mvnw clean source:jar deploy"
+      }
+    }
+  }
+
+  stage ('Build maintenance branch') {
+    when {
+      expression { BRANCH_NAME =~ /v\d+\.x/}  // maintenance release branch 'v1.x', 'v2.x'
+    }
+    steps {
+      withMaven() {
+        sh "./mvnw clean source:jar deploy"
+      }
+    }
+  }
+
+  stage ('Build maintenance branch') {
+    when {
+      expression { CHANGE_ID != null}  // Pull request
+    }
+    steps {
+      withMaven() {
+        sh "./mvnw clean verify"
+      }
+    }
+  }
+
+  // other cases
+//  withMaven() {
+//    //  Don't fail the build on test failure, let withMaven mark as unstable: -DtestFailureIgnore=true
+//    sh "./mvnw  -DtestFailureIgnore=true -Dmaven.javadoc.failOnError=false clean verify"
+//  }
 }
