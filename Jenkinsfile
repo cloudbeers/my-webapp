@@ -29,7 +29,7 @@ pipeline {
 
     stage( 'Build Pull Request' ) {
       when {
-        expression { CHANGE_ID != null }  // Pull request
+        expression { env.CHANGE_ID != null }  // Pull request
       }
       steps {
         withMaven() {
