@@ -7,10 +7,11 @@ pipeline {
   stages {
     stage( 'Build release branch and Upload to Nexus' ) {
       when {
-        expression { BRANCH_NAME == 'master' } // release branch 'master'
+        branch 'master' // release branch 'master'
       }
       steps {
         withMaven() {
+          echo "master build"
           sh "./mvnw clean source:jar deploy"
         }
       }
@@ -18,10 +19,12 @@ pipeline {
 
     stage( 'Build maintenance branch' ) {
       when {
-        expression { BRANCH_NAME =~ /v\d+\.x/ }  // maintenance release branch 'v1.x', 'v2.x'
+        //expression { BRANCH_NAME =~ /v\d+\.x/ }  // maintenance release branch 'v1.x', 'v2.x'
+        branch '/v\\d+\\.x/'
       }
       steps {
         withMaven() {
+          echo "maintenance branch build"
           sh "./mvnw clean source:jar deploy"
         }
       }
@@ -33,10 +36,13 @@ pipeline {
       }
       steps {
         withMaven() {
+          echo "pull request build"
           sh "./mvnw clean verify"
         }
       }
     }
+
+
   }
 
   // other cases
