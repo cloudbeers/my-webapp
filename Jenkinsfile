@@ -19,8 +19,7 @@ pipeline {
 
     stage( 'Build maintenance branch' ) {
       when {
-        //expression { BRANCH_NAME =~ /v\d+\.x/ }  // maintenance release branch 'v1.x', 'v2.x'
-        branch '/v\\d+\\.x/'
+        expression { BRANCH_NAME =~ /v\d+\.x/ }  // maintenance release branch 'v1.x', 'v2.x'
       }
       steps {
         withMaven() {
