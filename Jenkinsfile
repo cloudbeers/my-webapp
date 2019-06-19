@@ -22,10 +22,8 @@ pipeline {
         expression { BRANCH_NAME =~ /v\d+\.x/ }  // maintenance release branch 'v1.x', 'v2.x'
       }
       steps {
-        withMaven() {
-          echo "maintenance branch build"
-          sh "./mvnw clean source:jar deploy"
-        }
+        echo "maintenance branch build"
+        mavenBuild("clean source:jar deploy")
       }
     }
 
@@ -34,10 +32,8 @@ pipeline {
         expression { env.CHANGE_ID != null }  // Pull request
       }
       steps {
-        withMaven() {
-          echo "pull request build"
-          sh "./mvnw clean verify"
-        }
+        echo "pull request build"
+        mavenBuild("clean verify")
       }
     }
 
@@ -50,16 +46,28 @@ pipeline {
         }
       }
       steps {
-        withMaven() {
-          //  Don't fail the build on test failure, let withMaven mark as unstable: -DtestFailureIgnore=true
-          echo "Build something interesting"
-          sh "./mvnw  -DtestFailureIgnore=true -Dmaven.javadoc.failOnError=false clean verify"
-        }
+        echo "Build something interesting"
+        //  Don't fail the build on test failure, let withMaven mark as unstable: -DtestFailureIgnore=true
+        mavenBuild("-DtestFailureIgnore=true -Dmaven.javadoc.failOnError=false clean verify")
       }
     }
-
-
   }
-
 }
 
+
+def mavenBuild(cmdline) {
+  def localRepo = "${env.JENKINS_HOME}/${env.EXECUTOR_NUMBER}"
+  def settingsName = 'settings.xml'
+  def mavenOpts = '-Xms1g -Xmx4g -Djava.awt.headless=true'
+
+  withMaven(
+          //maven: mvnName,
+          //jdk: jdk,
+          //publisherStrategy: 'EXPLICIT',
+          //globalMavenSettingsConfig: settingsName,
+          //mavenOpts: mavenOpts,
+          mavenLocalRepo: localRepo){
+    sh "./mvnw $cmdline" // for temporary nodes
+    //sh "mvn $cmdline"
+  }
+}
