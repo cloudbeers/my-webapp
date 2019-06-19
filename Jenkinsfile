@@ -41,12 +41,25 @@ pipeline {
       }
     }
 
+    stage( 'Build something interesting' ) { // in no case so not sure about the stage name to use..
+      when {
+        allOf {
+          expression { env.CHANGE_ID == null }  // Pull request
+          expression { BRANCH_NAME !=~ /v\d+\.x/ }
+          expression { BRANCH_NAME != 'master' }
+        }
+      }
+      steps {
+        withMaven() {
+          //  Don't fail the build on test failure, let withMaven mark as unstable: -DtestFailureIgnore=true
+          echo "Build something interesting"
+          sh "./mvnw  -DtestFailureIgnore=true -Dmaven.javadoc.failOnError=false clean verify"
+        }
+      }
+    }
+
 
   }
 
-  // other cases
-//  withMaven() {
-//    //  Don't fail the build on test failure, let withMaven mark as unstable: -DtestFailureIgnore=true
-//    sh "./mvnw  -DtestFailureIgnore=true -Dmaven.javadoc.failOnError=false clean verify"
-//  }
 }
+
