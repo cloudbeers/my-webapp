@@ -20,6 +20,11 @@
     <java.version>1.8</java.version>
     <releaseVersion></releaseVersion>
   </properties>
+  <scm>
+    <connection>scm:git:https://github.com/olamy/my-webapp.git</connection>
+    <developerConnection>scm:git:https://github.com/olamy/my-webapp.git</developerConnection>
+    <url>https://github.com/olamy/my-webapp.git</url>
+  </scm>
   <dependencies>
     <dependency>
       <groupId>org.springframework.boot</groupId>
