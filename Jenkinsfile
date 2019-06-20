@@ -10,10 +10,8 @@ pipeline {
         branch 'master' // release branch 'master'
       }
       steps {
-        withMaven() {
-          echo "master build"
-          sh "./mvnw clean source:jar deploy"
-        }
+        echo "master build"
+        mavenBuild("clean source:jar deploy")
       }
     }
 
