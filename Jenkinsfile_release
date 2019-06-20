@@ -1,0 +1,46 @@
+pipeline {
+  agent any // configure here if you need any agent
+  options {
+    buildDiscarder(logRotator(numToKeepStr: '10')) // configurable
+    timeout(time: 1, unit: 'HOURS') // configurable
+  }
+
+  parameters {
+    string(name: 'BRANCH', defaultValue: 'master', description: 'Branch to release')
+    string(name: 'VERSION_NAME', defaultValue: null, description: 'Version Name')
+  }
+
+  stages{
+    stage("Checkout branch ") {
+      steps{
+        git url:"https://github.com/olamy/my-webapp.git", branch:"$BRANCH"
+      }
+    }
+    stage("Release of this great product xxx"){
+      when{
+        expression {VERSION_NAME.length()>0}
+      }
+      steps{
+        echo "The release $VERSION_NAME"
+
+        withMaven(
+                //maven: mvnName,
+                //jdk: jdk,
+                //globalMavenSettingsConfig: 'settings.xml',
+                //mavenOpts: '-Xms1g -Xmx4g -Djava.awt.headless=true',
+                mavenLocalRepo: "${env.JENKINS_HOME}/${env.EXECUTOR_NUMBER}"){
+          sh "./mvnw clean release:prepare release:perform -B -DreleaseVersion=$VERSION_NAME" // for temporary nodes
+          //sh "mvn $cmdline"
+        }
+      }
+    }
+    stage("Release error"){
+      when{
+        expression {VERSION_NAME.length()<1}
+      }
+      steps{
+        echo "Cannot release with an empty version name parameter"
+      }
+    }
+  }
+}  
