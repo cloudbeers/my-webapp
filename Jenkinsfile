@@ -35,7 +35,7 @@ pipeline {
       }
     }
 
-    stage( 'Build something interesting' ) { // in no case so not sure about the stage name to use..
+    stage( 'Build something interesting' ) { // in no special case so not sure about the stage name to use..
       when {
         allOf {
           expression { env.CHANGE_ID == null }  // Pull request
@@ -61,7 +61,6 @@ def mavenBuild(cmdline) {
   withMaven(
           //maven: mvnName,
           //jdk: jdk,
-          //publisherStrategy: 'EXPLICIT',
           //globalMavenSettingsConfig: settingsName,
           //mavenOpts: mavenOpts,
           mavenLocalRepo: localRepo){
