@@ -18,12 +18,15 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <java.version>1.8</java.version>
     <releaseVersion />
+    <scmConnection>scm:git:https://github.com/olamy/my-webapp.git</scmConnection>
+    <repository.snapshot.id>local.snapshots</repository.snapshot.id>
+    <repository.snapshot.url>file://${java.io.tmpdir}/snapshots</repository.snapshot.url>
+    <repository.release.id>local.release</repository.release.id>
+    <repository.release.url>file://${java.io.tmpdir}/releases</repository.release.url>
   </properties>
   <scm>
-    <connection>scm:git:https://github.com/olamy/my-webapp.git</connection>
-    <developerConnection>scm:git:https://github.com/olamy/my-webapp.git</developerConnection>
-    <url>https://github.com/olamy/my-webapp.git</url>
-    <tag>HEAD</tag>
+    <connection>${scmConnection}</connection>
+    <developerConnection>${scmConnection}</developerConnection>
   </scm>
   <dependencies>
     <dependency>
@@ -81,12 +84,12 @@
   </build>
   <distributionManagement>
     <snapshotRepository>
-      <id>local.snapshot</id>
-      <url>file://${java.io.tmpdir}/snapshots</url>
+      <id>${repository.snapshot.id}</id>
+      <url>${repository.snapshot.url}</url>
     </snapshotRepository>
     <repository>
-      <id>local.release</id>
-      <url>file://${java.io.tmpdir}/releases</url>
+      <id>${repository.release.id}</id>
+      <url>${repository.release.url}</url>
     </repository>
   </distributionManagement>
 </project>
