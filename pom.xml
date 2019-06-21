@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.mycompany.compliance</groupId>
   <artifactId>my-webapp</artifactId>
-  <version>2.0.2-SNAPSHOT</version>
+  <version>2.0.2</version>
   <packaging>jar</packaging>
   <name>my-webapp</name>
   <description>Demo project for Spring Boot</description>
@@ -27,7 +27,7 @@
   <scm>
     <connection>${scmConnection}</connection>
     <developerConnection>${scmConnection}</developerConnection>
-    <tag>HEAD</tag>
+    <tag>my-webapp-2.0.2</tag>
   </scm>
   <dependencies>
     <dependency>
