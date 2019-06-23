@@ -17,9 +17,6 @@ pipeline {
       }
     }
     stage("Release of this great product xxx"){
-//      when{
-//        expression {VERSION_NAME.length()>0}
-//      }
       steps{
         echo "The release $VERSION_NAME"
 
@@ -34,13 +31,5 @@ pipeline {
         }
       }
     }
-//    stage("Release error"){
-//      when{
-//        expression {VERSION_NAME.length()<1}
-//      }
-//      steps{
-//        echo "Cannot release with an empty version name parameter"
-//      }
-//    }
   }
 }
