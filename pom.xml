@@ -17,16 +17,14 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <java.version>1.8</java.version>
-    <releaseVersion />
-    <scmConnection>scm:git:https://github.com/olamy/my-webapp.git</scmConnection>
     <repository.snapshot.id>local.snapshots</repository.snapshot.id>
     <repository.snapshot.url>file://${java.io.tmpdir}/snapshots</repository.snapshot.url>
     <repository.release.id>local.release</repository.release.id>
     <repository.release.url>file://${java.io.tmpdir}/releases</repository.release.url>
   </properties>
   <scm>
-    <connection>${scmConnection}</connection>
-    <developerConnection>${scmConnection}</developerConnection>
+    <connection>scm:git:https://github.com/olamy/my-webapp.git</connection>
+    <developerConnection>scm:git:https://github.com/olamy/my-webapp.git</developerConnection>
     <tag>HEAD</tag>
   </scm>
   <dependencies>
@@ -54,7 +52,6 @@
           <configuration>
             <goals>clean deploy</goals>
             <preparationGoals>clean verify</preparationGoals>
-            <releaseVersion>${releaseVersion}</releaseVersion>
           </configuration>
         </plugin>
       </plugins>
