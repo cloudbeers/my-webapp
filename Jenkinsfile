@@ -5,7 +5,7 @@ pipeline {
     timeout(time: 1, unit: 'HOURS') // configurable
   }
   stages {
-    stage( 'Build release branch and Upload to Nexus' ) {
+    stage('Build release branch and Upload to Nexus') {
       when {
         branch 'master' // release branch 'master'
       }
@@ -15,7 +15,7 @@ pipeline {
       }
     }
 
-    stage( 'Build maintenance branch' ) {
+    stage('Build maintenance branch') {
       when {
         expression { BRANCH_NAME =~ /v\d+\.x/ }  // maintenance release branch 'v1.x', 'v2.x'
       }
@@ -25,7 +25,7 @@ pipeline {
       }
     }
 
-    stage( 'Build Pull Request' ) {
+    stage('Build Pull Request') {
       when {
         expression { env.CHANGE_ID != null }  // Pull request
       }
@@ -35,7 +35,7 @@ pipeline {
       }
     }
 
-    stage( 'Build something interesting' ) { // in no special case so not sure about the stage name to use..
+    stage('Build something interesting') { // in no special case so not sure about the stage name to use..
       when {
         allOf {
           expression { env.CHANGE_ID == null }  // Pull request
@@ -63,7 +63,7 @@ def mavenBuild(cmdline) {
           //jdk: jdk,
           //globalMavenSettingsConfig: settingsName,
           //mavenOpts: mavenOpts,
-          mavenLocalRepo: localRepo){
+          mavenLocalRepo: ".repository"){ // mimic maven-plugin behaviour?
     sh "./mvnw $cmdline" // for temporary nodes
     //sh "mvn $cmdline"
   }
