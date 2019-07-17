@@ -17,7 +17,7 @@ pipeline {
 
     stage('Build maintenance branch') {
       when {
-        expression { BRANCH_NAME =~ /v\d+\.x/ }  // maintenance release branch 'v1.x', 'v2.x'
+        expression { ${env.BRANCH_NAME} =~ /v\d+\.x/ }  // maintenance release branch 'v1.x', 'v2.x'
       }
       steps {
         echo "maintenance branch build"
@@ -27,7 +27,7 @@ pipeline {
 
     stage('Build Pull Request') {
       when {
-        expression { env.CHANGE_ID != null }  // Pull request
+        expression { ${env.CHANGE_ID} != null }  // Pull request
       }
       steps {
         echo "pull request build"
@@ -38,9 +38,9 @@ pipeline {
     stage('Build something interesting') { // in no special case so not sure about the stage name to use..
       when {
         allOf {
-          expression { env.CHANGE_ID == null }  // Pull request
-          expression { BRANCH_NAME !=~ /v\d+\.x/ }
-          expression { BRANCH_NAME != 'master' }
+          expression { ${env.CHANGE_ID} == null }  // Pull request
+          expression { ${env.BRANCH_NAME} !=~ /v\d+\.x/ }
+          expression { ${env.BRANCH_NAME} != 'master' }
         }
       }
       steps {
