@@ -25,9 +25,8 @@ pipeline {
                 //jdk: jdk,
                 //globalMavenSettingsConfig: 'settings.xml',
                 //mavenOpts: '-Xms1g -Xmx4g -Djava.awt.headless=true',
-                mavenLocalRepo: "${env.JENKINS_HOME}/${env.EXECUTOR_NUMBER}"){
+                mavenLocalRepo: ".repository"){
           sh "./mvnw clean release:prepare release:perform -B -DreleaseVersion=$VERSION_NAME" // for temporary nodes
-          //sh "mvn $cmdline"
         }
       }
     }
