@@ -23,6 +23,7 @@ pipeline {
                  'GIT_AUTHOR_NAME=John Doe', 'GIT_AUTHOR_EMAIL=john@beers.com']) {
           withMaven(){
             sh "./mvnw clean release:prepare release:perform -DreleaseVersion=$VERSION_NAME" // for temporary nodes
+            // if VERSION_NAME is empty maven calculate version number using default strategy
           }
         }
       }

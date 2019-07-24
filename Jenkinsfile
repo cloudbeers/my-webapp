@@ -11,7 +11,9 @@ pipeline {
       }
       steps {
         echo "master build"
-        mavenBuild("clean source:jar deploy")
+        withMaven(){ // mimic maven-plugin behaviour?
+          sh "./mvnw clean source:jar deploy" // for temporary nodes
+        }
       }
     }
 
@@ -21,7 +23,9 @@ pipeline {
       }
       steps {
         echo "maintenance branch build"
-        mavenBuild("clean source:jar deploy")
+        withMaven(){ // mimic maven-plugin behaviour?
+          sh "./mvnw clean source:jar deploy" // for temporary nodes
+        }
       }
     }
 
@@ -31,7 +35,9 @@ pipeline {
       }
       steps {
         echo "pull request build"
-        mavenBuild("clean verify")
+        withMaven(){ // mimic maven-plugin behaviour?
+          sh "./mvnw clean verify" // for temporary nodes
+        }
       }
     }
 
@@ -46,20 +52,10 @@ pipeline {
       steps {
         echo "Build something interesting"
         //  Don't fail the build on test failure, let withMaven mark as unstable: -DtestFailureIgnore=true
-        mavenBuild("-DtestFailureIgnore=true -Dmaven.javadoc.failOnError=false clean verify")
+        withMaven(){ // mimic maven-plugin behaviour?
+          sh "./mvnw -DtestFailureIgnore=true -Dmaven.javadoc.failOnError=false clean verify" // for temporary nodes
+        }
       }
     }
-  }
-}
-
-
-def mavenBuild(cmdline) {
-  def localRepo = "${env.JENKINS_HOME}/${env.EXECUTOR_NUMBER}"
-  def settingsName = 'settings.xml'
-  def mavenOpts = '-Xms1g -Xmx4g -Djava.awt.headless=true'
-
-  withMaven(){ // mimic maven-plugin behaviour?
-    sh "./mvnw $cmdline" // for temporary nodes
-    //sh "mvn $cmdline"
   }
 }
