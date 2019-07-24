@@ -58,7 +58,7 @@ def mavenBuild(cmdline) {
   def settingsName = 'settings.xml'
   def mavenOpts = '-Xms1g -Xmx4g -Djava.awt.headless=true'
 
-  withMaven(mavenLocalRepo: ".repository"){ // mimic maven-plugin behaviour?
+  withMaven(){ // mimic maven-plugin behaviour?
     sh "./mvnw $cmdline" // for temporary nodes
     //sh "mvn $cmdline"
   }
