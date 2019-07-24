@@ -20,8 +20,8 @@
     <project.scm.id>github</project.scm.id>
   </properties>
   <scm>
-    <connection>scm:git:https://github.com/cyrille-leclerc/my-webapp.git</connection>
-    <developerConnection>scm:git:https://github.com/cyrille-leclerc/my-webapp.git</developerConnection>
+    <connection>scm:git:https://github.com/cloudbeers/my-webapp.git</connection>
+    <developerConnection>scm:git:https://github.com/cloudbeers/my-webapp.git</developerConnection>
   </scm>
   <dependencies>
     <dependency>
