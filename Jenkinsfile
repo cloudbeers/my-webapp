@@ -27,7 +27,7 @@ pipeline {
 
     stage('Build Pull Request') {
       when {
-        expression { "${env.CHANGE_ID}" != null }  // Pull request
+        expression { "${CHANGE_ID}" != null }  // Pull request
       }
       steps {
         echo "pull request build"
