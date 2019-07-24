@@ -22,8 +22,8 @@
     <repository.release.url>https://nexus3.beescloud.com/repository/maven-releases/</repository.release.url>
   </properties>
   <scm>
-    <connection>scm:git:https://github.com/olamy/my-webapp.git</connection>
-    <developerConnection>scm:git:https://github.com/olamy/my-webapp.git</developerConnection>
+    <connection>scm:git:https://github.com/cyrille-leclerc/my-webapp.git</connection>
+    <developerConnection>scm:git:https://github.com/cyrille-leclerc/my-webapp.git</developerConnection>
     <tag>HEAD</tag>
   </scm>
   <dependencies>
