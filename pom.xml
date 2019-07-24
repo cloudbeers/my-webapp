@@ -16,17 +16,12 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <java.version>1.8</java.version>
-    <repository.snapshot.id>nexus3.beescloud.com</repository.snapshot.id>
-    <repository.snapshot.url>https://nexus3.beescloud.com/repository/maven-snapshots/</repository.snapshot.url>
-    <repository.release.id>nexus3.beescloud.com</repository.release.id>
-    <repository.release.url>https://nexus3.beescloud.com/repository/maven-releases/</repository.release.url>
     <!-- property used by maven release plugin to map with server id from settings file -->
-    <project.scm.id></project.scm.id>
+    <project.scm.id>github</project.scm.id>
   </properties>
   <scm>
     <connection>scm:git:https://github.com/cyrille-leclerc/my-webapp.git</connection>
     <developerConnection>scm:git:https://github.com/cyrille-leclerc/my-webapp.git</developerConnection>
-    <tag>HEAD</tag>
   </scm>
   <dependencies>
     <dependency>
@@ -50,10 +45,6 @@
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-release-plugin</artifactId>
           <version>2.5.3</version>
-          <configuration>
-            <goals>clean deploy</goals>
-            <preparationGoals>clean verify</preparationGoals>
-          </configuration>
         </plugin>
       </plugins>
     </pluginManagement>
@@ -100,12 +91,12 @@
   </build>
   <distributionManagement>
     <snapshotRepository>
-      <id>${repository.snapshot.id}</id>
-      <url>${repository.snapshot.url}</url>
+      <id>nexus3.beescloud.com</id>
+      <url>https://nexus3.beescloud.com/repository/maven-snapshots/</url>
     </snapshotRepository>
     <repository>
-      <id>${repository.release.id}</id>
-      <url>${repository.release.url}</url>
+      <id>nexus3.beescloud.com</id>
+      <url>https://nexus3.beescloud.com/repository/maven-releases/</url>
     </repository>
   </distributionManagement>
 </project>
