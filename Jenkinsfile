@@ -27,7 +27,7 @@ pipeline {
 
     stage('Build Pull Request') {
       when {
-        expression { "${CHANGE_ID}" != null }  // Pull request
+        expression { env.CHANGE_ID != null }  // Pull request
       }
       steps {
         echo "pull request build"
@@ -38,7 +38,7 @@ pipeline {
     stage('Build something interesting') { // in no special case so not sure about the stage name to use..
       when {
         allOf {
-          expression { "${env.CHANGE_ID}" == null }  // Pull request
+          expression { env.CHANGE_ID == null }  // Pull request
           expression { "${env.BRANCH_NAME}" !=~ /v\d+\.x/ }
           expression { "${env.BRANCH_NAME}" != 'master' }
         }
