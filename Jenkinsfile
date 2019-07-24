@@ -10,7 +10,6 @@ pipeline {
         branch 'master' // release branch 'master'
       }
       steps {
-        echo "master build"
         withMaven(){ // mimic maven-plugin behaviour?
           sh "./mvnw clean source:jar deploy" // for temporary nodes
         }
@@ -22,7 +21,6 @@ pipeline {
         expression { "${env.BRANCH_NAME}" =~ /v\d+\.x/ }  // maintenance release branch 'v1.x', 'v2.x'
       }
       steps {
-        echo "maintenance branch build"
         withMaven(){ // mimic maven-plugin behaviour?
           sh "./mvnw clean source:jar deploy" // for temporary nodes
         }
@@ -34,14 +32,13 @@ pipeline {
         expression { env.CHANGE_ID != null }  // Pull request
       }
       steps {
-        echo "pull request build"
         withMaven(){ // mimic maven-plugin behaviour?
           sh "./mvnw clean verify" // for temporary nodes
         }
       }
     }
 
-    stage('Build something interesting') { // in no special case so not sure about the stage name to use..
+    stage('Build Development/Feature branch') { // in no special case so not sure about the stage name to use..
       when {
         allOf {
           expression { env.CHANGE_ID == null }  // Pull request
