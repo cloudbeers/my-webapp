@@ -20,6 +20,8 @@
     <repository.snapshot.url>https://nexus3.beescloud.com/repository/maven-snapshots/</repository.snapshot.url>
     <repository.release.id>nexus3.beescloud.com</repository.release.id>
     <repository.release.url>https://nexus3.beescloud.com/repository/maven-releases/</repository.release.url>
+    <!-- property used by maven release plugin to map with server id from settings file -->
+    <project.scm.id></project.scm.id>
   </properties>
   <scm>
     <connection>scm:git:https://github.com/cyrille-leclerc/my-webapp.git</connection>
