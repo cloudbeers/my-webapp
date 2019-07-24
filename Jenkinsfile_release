@@ -18,7 +18,7 @@ pipeline {
     }
     stage("Release of this great product xxx"){
       steps{
-        echo "The release $VERSION_NAME"
+        echo "The release $Version"
         withEnv(['GIT_COMMITTER_NAME=John Doe', 'GIT_COMMITTER_EMAIL=john@beers.com',
                  'GIT_AUTHOR_NAME=John Doe', 'GIT_AUTHOR_EMAIL=john@beers.com']) {
           withMaven(){
