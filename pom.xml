@@ -26,7 +26,6 @@
   <scm>
     <connection>scm:git:https://github.com/cyrille-leclerc/my-webapp.git</connection>
     <developerConnection>scm:git:https://github.com/cyrille-leclerc/my-webapp.git</developerConnection>
-    <tag>HEAD</tag>
   </scm>
   <dependencies>
     <dependency>
