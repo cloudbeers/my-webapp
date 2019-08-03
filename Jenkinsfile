@@ -50,7 +50,7 @@ pipeline {
         echo "Build something interesting"
         //  Don't fail the build on test failure, let withMaven mark as unstable: -DtestFailureIgnore=true
         withMaven(){ // mimic maven-plugin behaviour?
-          sh "./mvnw -DtestFailureIgnore=true -Dmaven.javadoc.failOnError=false clean verify" // for temporary nodes
+          sh "./mvnw -DtestFailureIgnore=true -Dmaven.javadoc.failOnError=false clean verify --fail-never" // for temporary nodes
         }
       }
     }
